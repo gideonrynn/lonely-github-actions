@@ -15,8 +15,6 @@ on:
       interface:
         type: string
         description: Interface
-      environment:
-        type: environment
       comments:
         type: string
         description: Comments For This Run
