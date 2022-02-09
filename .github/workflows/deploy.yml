@@ -17,12 +17,12 @@ on:
         description: Interface
       environment:
         type: environment
-        required: true
       comments:
         type: string
         description: Comments For This Run
       are-we-having-fun:
         type: boolean
+        description: Are We Having Fun
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
