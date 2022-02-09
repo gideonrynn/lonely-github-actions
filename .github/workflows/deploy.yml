@@ -8,11 +8,42 @@ on:
         description: 'Log level'
         required: true
         default: 'warning'
-      tags:
-        description: 'Test scenario tags'
+        type: choice
+        options:
+        - update
+        - note
+      interface:
+        type: string
+        description: Interface
+      environment:
+        type: environment
+        required: true
+      comments:
+        type: string
+        description: Comments For This Run
+      are-we-having-fun:
+        type: boolean
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+
+  log-the-inputs:
+      runs-on: ubuntu-latest
+      steps:
+        - run: |
+            echo "Log level: $LEVEL"
+            echo "Interface: $INTERFACE"
+            echo "Environment: $ENVIRONMENT"
+            echo "Are we having fun?: $FUN"
+            echo "Comments"
+            
+          env:
+            LEVEL: ${{ github.event.inputs.logLevel }}
+            INTERFACE: ${{ github.event.inputs.tags }}
+            ENVIRONMENT: ${{ github.event.inputs.environment }}
+            COMMENTS: ${{ github.event.inputs.comments }}
+            FUN: ${{ github.event.inputs.are-we-having-fun }}
+  
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
