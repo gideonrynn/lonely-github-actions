@@ -1,0 +1,32 @@
+# Below is the Github Action deploy code created as part of the CI Evaluate Github Actions project
+# The action can be viewed and executed in the Actions tab of this repository
+# The code deployment is currently managed by a Jenkins job and .jenkins/Jenkinsfile.
+# This deploy config is the Github Actions version of that Jenkinsfile and is pointed at deploying develop code only
+
+# name that will appear in the actions tab
+name: Deploy Affiliations Code to AWS
+
+# event that controls when the workflow will run
+on: 
+  # manual execution
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch'
+        default: 'develop'
+        required: true
+        options:
+          - develop
+
+# as a first test, log the inputs and run
+jobs:
+  # name of the first job
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "branch: $branch"
+          echo "ref: $ref"
+        env:
+          branch: ${{ github.event.inputs.branch }}
+          ref: ${{ github.ref }}
