@@ -62,4 +62,4 @@ jobs:
         run: |
           echo "Log level: ${{ github.event.inputs.logLevel }}"
           echo "Tags: ${{ github.event.inputs.tags }}"
-          echo "Github: ${{ github }}"
+          echo "Github: ${{ github.event }}"
