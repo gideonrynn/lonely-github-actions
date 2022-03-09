@@ -42,7 +42,7 @@ jobs:
             ENVIRONMENT: ${{ github.event.inputs.environment }}
             COMMENTS: ${{ github.event.inputs.comments }}
             FUN: ${{ github.event.inputs.are-we-having-fun }}
-            GITHUBEV: ${{ github.event }}
+            GITHUBEV: ${{ github.ref }}
   
   # This workflow contains a single job called "build"
   build:
