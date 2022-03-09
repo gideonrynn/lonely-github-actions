@@ -34,6 +34,7 @@ jobs:
             echo "Environment: $ENVIRONMENT"
             echo "Are we having fun?: $FUN"
             echo "Comments"
+            echo "Github event object: $GITHUBEV"
             
           env:
             LEVEL: ${{ github.event.inputs.logLevel }}
@@ -41,6 +42,7 @@ jobs:
             ENVIRONMENT: ${{ github.event.inputs.environment }}
             COMMENTS: ${{ github.event.inputs.comments }}
             FUN: ${{ github.event.inputs.are-we-having-fun }}
+            GITHUBEV: ${{ github.event }}
   
   # This workflow contains a single job called "build"
   build:
@@ -62,4 +64,3 @@ jobs:
         run: |
           echo "Log level: ${{ github.event.inputs.logLevel }}"
           echo "Tags: ${{ github.event.inputs.tags }}"
-          echo "Github: ${{ github.event }}"
