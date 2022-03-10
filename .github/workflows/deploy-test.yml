@@ -17,6 +17,10 @@ on:
         required: true
         options:
           - develop
+          
+# prevent multiple jobs running at the same time for jobs with the specified group
+concurrency: 
+  group: affil-${{ github.ref }}
 
 # as a first test, log the inputs and run
 jobs:
