@@ -36,12 +36,14 @@ jobs:
   # name of the first job
   log-the-inputs:
     runs-on: ubuntu-latest
+    outputs: 
+      match-result: ${{ steps.set-result.outputs.result }}
+        
     steps:
       - name: Echo inputs
         run: |
           echo "branch: $branch"
           echo "ref: $ref"
-          
           
       - name: Setup GitHub Script Action
         id: set-result
@@ -65,12 +67,12 @@ jobs:
       
       - name: Check match result
         run: |
-          echo "match result: ${{ steps.set-result.outputs.result }}"
+          echo "match result1: ${{ steps.set-result.outputs.result }}"
 
   build:
       needs: [log-the-inputs]
 #       if: github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
-      if: needs.log-the-inputs.outputs.result == 'true'
+      if: needs.log-the-inputs.outputs.match-result == 'true'
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repo
