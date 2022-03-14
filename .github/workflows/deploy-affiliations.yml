@@ -52,14 +52,14 @@ jobs:
         with:
           # The script to run
           script: |
-            const matchResult = false;
+            let matchResult = false;
             if ('${{ env.branch }}' == 'develop') {
-              console.log('Result of check is ' + matchResult + '. Branch and environment match. OK to execute build.')
-              matchResult = true
-              return matchResult
+              console.log('Result of check is ' + matchResult + '. Branch and environment match. OK to execute build.');
+              matchResult = true;
+              return matchResult;
             } else {
-              console.log('Result of check is ' + matchResult + '. Branch and environment do not match. Build will not be executed.')
-              return matchResult
+              console.log('Result of check is ' + matchResult + '. Branch and environment do not match. Build will not be executed.');
+              return matchResult;
             }
           result-encoding: string
           
