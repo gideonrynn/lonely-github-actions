@@ -38,7 +38,7 @@ jobs:
           echo "ref: $ref"
 
   build:
-      if: env.branch == 'develop'
+      if: github.event.inputs.branch == 'develop'
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repo
