@@ -16,10 +16,10 @@ on:
 #         default: 'develop'
         required: true
         options:
-          - develop
-          - main
-          - qa
-          - nana
+        - develop
+        - main
+        - qa
+        - nana
           
 # prevent multiple jobs running at the same time for jobs with the specified group
 concurrency: 
