@@ -37,13 +37,26 @@ jobs:
   log-the-inputs:
     runs-on: ubuntu-latest
     steps:
-      - run: |
+      - name: Echo inputs
+        run: |
           echo "branch: $branch"
           echo "ref: $ref"
+          
+      - name: Match branch and environment
+        id: match-inputs
+        if: |
+          github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
+        run: |
+          echo "::set-output name=match::true"
+      
+      - name: Check match result
+        run: |
+          echo "match result: ${{ steps.match-inputs.outputs.match }}
 
   build:
+      needs: [log-the-inputs]
 #       if: github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
-      if: github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
+      if: steps.match-inputs.outputs.match == 'true'
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repo
