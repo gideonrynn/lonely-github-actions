@@ -43,7 +43,7 @@ jobs:
 
   build:
 #       if: github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
-      if: github.event.inputs.branch == contains(['develop', 'qa'])
+      if: contains(github.event.inputs.branch, ['develop', 'qa'])
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repo
