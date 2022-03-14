@@ -38,7 +38,7 @@ jobs:
           echo "ref: $ref"
 
   build:
-      if: $build_env == 'develop'
+      if: ${{env.build_env}} == 'develop'
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repo
