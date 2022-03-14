@@ -54,11 +54,17 @@ jobs:
           script: |
             let matchResult = false;
             if ('${{ env.branch }}' == 'develop') {
-              console.log('Result of check is ' + matchResult + '. Branch and environment match. OK to execute build.');
               matchResult = true;
+              console.log('Match result: ' + matchResult);
+              console.log('Branch to deploy: ' + ${{ env.branch }})
+              console.log('Environment: ' + ${{ env.branch }})
+              console.log('Branch and environment match. OK to execute build.)
               return matchResult;
             } else {
-              console.log('Result of check is ' + matchResult + '. Branch and environment do not match. Build will not be executed.');
+              console.log('Match result: ' + matchResult);
+              console.log('Branch to deploy: ' + ${{ env.branch }})
+              console.log('Environment: ' + ${{ env.branch }})
+              console.log('Branch and environment do not match. Build will not be executed.');
               return matchResult;
             }
           result-encoding: string
