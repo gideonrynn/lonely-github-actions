@@ -49,7 +49,7 @@ jobs:
         with:
           # The script to run
           script: |
-            if (env.branch == 'develop' || env.branch == 'qa') {
+            if (${{ env.branch }} == 'develop' || ${{ env.branch }} == 'qa') {
               return true
             } else {
               return false
