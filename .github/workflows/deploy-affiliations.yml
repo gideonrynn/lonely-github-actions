@@ -57,10 +57,10 @@ jobs:
             
             if ('${{ env.branch }}' == 'develop') {
               matchResult = true;
-              matchComment = 'Branch and environment match. OK to execute build.'
+              matchComment = 'Branch and environment match. OK to execute build.';
               return matchResult;
             } else {
-              matchComment = 'Branch and environment do not match. Build will not be executed.');
+              matchComment = 'Branch and environment do not match. Build will not be executed.';
               return matchResult;
             }
             
