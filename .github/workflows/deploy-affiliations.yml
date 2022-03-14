@@ -13,13 +13,14 @@ on:
     inputs:
       branch:
         description: 'Branch'
-#         default: 'develop'
+        default: 'develop'
         required: true
+        type: choice
         options:
-        - develop
-        - main
-        - qa
-        - nana
+          - develop
+          - main
+          - qa
+          - nana
           
 # prevent multiple jobs running at the same time for jobs with the specified group
 concurrency: 
