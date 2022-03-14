@@ -42,21 +42,34 @@ jobs:
           echo "branch: $branch"
           echo "ref: $ref"
           
-      - name: Match branch and environment
-        id: match-inputs
-        if: |
-          github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
-        run: |
-          echo "::set-output name=match::true"
+          
+      - name: Setup GitHub Script Action
+        id: set-result
+        uses: actions/github-script@v6.0.0
+        with:
+          # The script to run
+          script: |
+            if (github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa') {
+              return true
+            } else {
+              return false
+            }
+          
+      #- name: Match branch and environment
+       # id: match-inputs
+        # if: |
+          # github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
+        # run: |
+          # echo "::set-output name=match::true"
       
       - name: Check match result
         run: |
-          echo "match result: ${{ steps.match-inputs.outputs.match }}"
+          echo "match result: ${{ steps.set-result.outputs.result }}"
 
   build:
       needs: [log-the-inputs]
 #       if: github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
-      if: needs.log-the-inputs.outputs.match == 'true'
+      if: needs.log-the-inputs.outputs.result == 'true'
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repo
