@@ -17,6 +17,9 @@ on:
         required: true
         options:
           - develop
+          - main
+          - qa
+          - nana
           
 # prevent multiple jobs running at the same time for jobs with the specified group
 concurrency: 
@@ -38,7 +41,7 @@ jobs:
           echo "ref: $ref"
 
   build:
-      if: github.event.inputs.branch == 'develop'
+      if: github.event.inputs.branch == 'develop' || 'qa'
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repo
