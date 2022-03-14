@@ -63,8 +63,8 @@ jobs:
             }
             
             console.log('Match result: ' + matchResult);
-            console.log('Branch to deploy: "' + ${{ env.branch }} + '"');
-            console.log('Environment: "' + ${{ env.branch }} + '"');
+            console.log('Branch to deploy: ' + '${{ env.branch }}');
+            console.log('Environment: ' + '${{ env.branch }}');
             console.log(matchComment);
             
             return matchResult;
