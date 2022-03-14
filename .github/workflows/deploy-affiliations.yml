@@ -56,12 +56,10 @@ jobs:
             let matchComment = '';
             
             if ('${{ env.branch }}' == 'develop') {
-              matchResult = true;
-              matchComment = 'Branch and environment match. OK to execute build.';
-              return matchResult;
+              matchResult = true
+              matchComment = 'Branch and environment match. OK to execute build.'
             } else {
-              matchComment = 'Branch and environment do not match. Build will not be executed.';
-              return matchResult;
+              matchComment = 'Branch and environment do not match. Build will not be executed.'
             }
             
             console.log('Match result: ' + matchResult);
@@ -69,6 +67,7 @@ jobs:
             console.log('Environment: ' + ${{ env.branch }});
             console.log(matchComment);
             
+            return matchResult;
           result-encoding: string
           
       #- name: Match branch and environment
