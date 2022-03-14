@@ -13,7 +13,7 @@ on:
     inputs:
       branch:
         description: 'Branch'
-        default: 'develop'
+#         default: 'develop'
         required: true
         options:
           - develop
