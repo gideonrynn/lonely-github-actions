@@ -54,6 +54,7 @@ jobs:
             } else {
               return false
             }
+          result-encoding: string
           
       #- name: Match branch and environment
        # id: match-inputs
