@@ -44,17 +44,22 @@ jobs:
         run: |
           echo "branch: $branch"
           echo "ref: $ref"
+          echo "$GITHUB_CONTEXT"
           
-      - name: Setup GitHub Script Action
+      - name: Use gha script action to check match on branch and environment
         id: set-result
         uses: actions/github-script@v6.0.0
         with:
           # The script to run
           script: |
-            if ('${{ env.branch }}' == 'develop' || '${{ env.branch }}' == 'qa') {
-              return 'true'
+            const matchResult = false;
+            if ('${{ env.branch }}' == 'develop') {
+              console.log('Result of check is ' matchResult '. Branch and environment match. OK to execute build.')
+              matchResult = true
+              return matchResult
             } else {
-              return 'false'
+              console.log('Result of check is ' matchResult '. Branch and environment do not match. Build will not be executed.')
+              return matchResult
             }
           result-encoding: string
           
@@ -65,9 +70,17 @@ jobs:
         # run: |
           # echo "::set-output name=match::true"
       
-      - name: Check match result
-        run: |
-          echo "match result1: ${{ steps.set-result.outputs.result }}"
+#       - name: Log match result
+#         if: ${{ steps.set-result.outputs.result }} = "true"
+#         run: |
+#           echo "match result: ${{ steps.set-result.outputs.result }}"
+#           echo "
+
+#       - name: Check match result
+#         if: ${{ steps.set-result.outputs.result }} = "true"
+#         run: |
+#           echo "match result: ${{ steps.set-result.outputs.result }}"
+#           echo "
 
   build:
       needs: [log-the-inputs]
