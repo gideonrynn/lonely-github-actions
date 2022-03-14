@@ -56,7 +56,7 @@ jobs:
   build:
       needs: [log-the-inputs]
 #       if: github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
-      if: steps.match-inputs.outputs.match == 'true'
+      if: needs.log-the-inputs.outputs.match == 'true'
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repo
