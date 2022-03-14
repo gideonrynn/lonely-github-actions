@@ -42,7 +42,7 @@ jobs:
           echo "ref: $ref"
 
   build:
-      if: github.event.inputs.branch == 'develop' || 'qa'
+      if: github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repo
