@@ -53,20 +53,22 @@ jobs:
           # The script to run
           script: |
             let matchResult = false;
+            let matchComment = '';
+            
             if ('${{ env.branch }}' == 'develop') {
               matchResult = true;
-              console.log('Match result: ' + matchResult);
-              console.log('Branch to deploy: ' + ${{ env.branch }})
-              console.log('Environment: ' + ${{ env.branch }})
-              console.log('Branch and environment match. OK to execute build.)
+              matchComment = 'Branch and environment match. OK to execute build.'
               return matchResult;
             } else {
-              console.log('Match result: ' + matchResult);
-              console.log('Branch to deploy: ' + ${{ env.branch }})
-              console.log('Environment: ' + ${{ env.branch }})
-              console.log('Branch and environment do not match. Build will not be executed.');
+              matchComment = 'Branch and environment do not match. Build will not be executed.');
               return matchResult;
             }
+            
+            console.log('Match result: ' + matchResult);
+            console.log('Branch to deploy: ' + ${{ env.branch }});
+            console.log('Environment: ' + ${{ env.branch }});
+            console.log(matchComment);
+            
           result-encoding: string
           
       #- name: Match branch and environment
