@@ -15,8 +15,21 @@ on:
         description: 'Branch'
         default: 'develop'
         required: true
+        type: choice
         options:
           - develop
+          - main
+          - qa
+          - nana
+          
+# prevent multiple jobs running at the same time for jobs with the specified group
+concurrency: 
+  group: affil-${{ github.ref }}
+  
+env:
+  branch: ${{ github.event.inputs.branch }}
+  ref: ${{ github.ref }}
+  build_env: ${{ github.event.inputs.branch }}
 
 # as a first test, log the inputs and run
 jobs:
@@ -27,6 +40,11 @@ jobs:
       - run: |
           echo "branch: $branch"
           echo "ref: $ref"
-        env:
-          branch: ${{ github.event.inputs.branch }}
-          ref: ${{ github.ref }}
+
+  build:
+#       if: github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
+      if: github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@v2
