@@ -50,9 +50,9 @@ jobs:
           # The script to run
           script: |
             if ('${{ env.branch }}' == 'develop' || '${{ env.branch }}' == 'qa') {
-              return true
+              return 'true'
             } else {
-              return false
+              return 'false'
             }
           result-encoding: string
           
@@ -70,7 +70,7 @@ jobs:
   build:
       needs: [log-the-inputs]
 #       if: github.event.inputs.branch == 'develop' || github.event.inputs.branch == 'qa'
-      if: needs.log-the-inputs.outputs.set-result == true
+      if: needs.log-the-inputs.outputs.set-result == 'true'
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repo
