@@ -51,7 +51,7 @@ jobs:
       
       - name: Check match result
         run: |
-          echo "match result: ${{ steps.match-inputs.outputs.match }}
+          echo "match result: ${{ steps.match-inputs.outputs.match }}"
 
   build:
       needs: [log-the-inputs]
