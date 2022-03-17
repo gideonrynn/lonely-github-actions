@@ -43,4 +43,4 @@ jobs:
       # https://docs.github.com/en/actions/learn-github-actions/environment-variables
       - name: Tell me what triggered this workflow run
         run: |
-          echo ${{ env.GITHUB_REF_NAME}}
+          echo ${{ GITHUB_REF_NAME }}
