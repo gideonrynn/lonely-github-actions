@@ -41,7 +41,7 @@ jobs:
           
           # https://ryanstutorials.net/bash-scripting-tutorial/bash-if-statements.php#nested
           # https://phoenixnap.com/kb/bash-if-statement#:~:text=What%20is%20the%20Bash%20if%20Statement%3F&text=Bash%20scripts%20help%20automate%20tasks,making%20process%20during%20a%20program.
-          if [$GITHUB_EVENT_NAME == 'push']
+          if ["$GITHUB_EVENT_NAME" == 'push']
           then
             case "$GITHUB_REF_NAME" in
             develop) echo "Setting environment to develop"
