@@ -47,11 +47,11 @@ jobs:
             develop) echo "Setting environment to develop"
                 echo "::set-output name=env-sec::develop"
                 ;;
-            qa) echo "Setting environment to qa"
+            main) echo "Setting environment to main"
                 echo "::set-output name=env-sec::main"
                 ;;
             production) echo "Setting environment to production"
-                echo "::set-output name=env-sec::develop"
+                echo "::set-output name=env-sec::production"
                 ;;
             *) echo "Branch does not match any existing environments"
                ;;
@@ -78,8 +78,8 @@ jobs:
         run: |
           echo "The branch or tag name that triggered the workflow run: $GITHUB_REF"
           echo "The branch or tag name that triggered the workflow run: $GITHUB_REF_NAME"
+          echo "Other was to access branch name is ${{ github.ref_name}}"
           echo "The name of the event that triggered the workflow: $GITHUB_EVENT_NAME"
-          echo "The name of the event that triggered the workflow: $GITHUB_ENV"
      
       # Runs a single command using the runners shell
       - name: Give me the input if it exists
