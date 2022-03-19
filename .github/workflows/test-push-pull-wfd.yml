@@ -48,9 +48,9 @@ jobs:
                 echo "::set-output name=env-sec::develop"
                 ;;
             qa) echo "Setting environment to qa"
-                echo "::set-output name=env-sec::qa"
+                echo "::set-output name=env-sec::main"
                 ;;
-            production) echo "Setting environment to qa"
+            production) echo "Setting environment to production"
                 echo "::set-output name=env-sec::develop"
                 ;;
             *) echo "Branch does not match any existing environments"
