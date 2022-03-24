@@ -7,21 +7,21 @@ on:
   # Triggers the workflow on push or pull request events but only for the develop branch
   push:
     branches: [ develop, main ]
-  pull_request:
-    branches: [ develop, main ]
+  # pull_request:
+    # branches: [ develop, main ]
 
   # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-    inputs:
-      location:
-        description: 'Location'
-        required: true
-        default: 'here'
-        type: choice
-        options:
-        - here
-        - there
-        - everywhere
+  # workflow_dispatch:
+    # inputs:
+      # location:
+        # description: 'Location'
+        # required: true
+        # default: 'here'
+        # type: choice
+       # options:
+       # - here
+       # - there
+       # - everywhere
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -31,34 +31,33 @@ jobs:
     outputs:
       environment: ${{ steps.set-env.outputs.env-sec }}
     steps:
+    
+      # use bash (default) script to check branch that triggered wf and set environment for secrets access
+      # alternatively also use github-script action: https://github.com/marketplace/actions/github-script
+      # https://ryanstutorials.net/bash-scripting-tutorial/bash-if-statements.php#nested
+      # https://phoenixnap.com/kb/bash-if-statement#:~:text=What%20is%20the%20Bash%20if%20Statement%3F&text=Bash%20scripts%20help%20automate%20tasks,making%20process%20during%20a%20program.
       - name: Set environment on branch
         id: set-env
         run: |
-          # use bash (default) script to check branch that triggered wf and set environment for secrets access
-          # alternatively also use github-script action: https://github.com/marketplace/actions/github-script
           echo "Branch that triggered the workflow run: $GITHUB_REF_NAME"
           echo "Event that triggered the workflow run: $GITHUB_EVENT_NAME"
           
-          # https://ryanstutorials.net/bash-scripting-tutorial/bash-if-statements.php#nested
-          # https://phoenixnap.com/kb/bash-if-statement#:~:text=What%20is%20the%20Bash%20if%20Statement%3F&text=Bash%20scripts%20help%20automate%20tasks,making%20process%20during%20a%20program.
-          if [ "$GITHUB_EVENT_NAME" == 'push' ]
-          then
-            case "$GITHUB_REF_NAME" in
-            develop) echo "Setting environment to develop"
-                echo "::set-output name=env-sec::develop"
-                ;;
-            main) echo "Setting environment to main"
-                echo "::set-output name=env-sec::main"
-                ;;
-            production) echo "Setting environment to production"
-                echo "::set-output name=env-sec::production"
-                ;;
-            *) echo "Branch does not match any existing environments"
-               ;;
-            esac
-          else
-            echo "Some other event has triggered this workflow to run"
-          fi
+          case "$GITHUB_REF_NAME" in
+          develop) 
+            echo "Setting environment to develop"
+            echo "::set-output name=env-sec::develop"
+            ;;
+          main) 
+            echo "Setting environment to main"
+            echo "::set-output name=env-sec::main"
+            ;;
+          production) 
+            echo "Setting environment to production"
+            echo "::set-output name=env-sec::production"
+            ;;
+          *) echo "Branch does not match any existing environments"
+             ;;
+           esac
   
   # job 2
   deploy:
