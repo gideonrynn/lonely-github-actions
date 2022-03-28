@@ -6,7 +6,7 @@ name: Push Pull and Workflow Dispatch
 on:
   # Triggers the workflow on push or pull request events but only for the develop branch
   push:
-    branches: [ develop, main ]
+    branches: [ develop, main, github-test-push ]
   # pull_request:
     # branches: [ develop, main ]
 
@@ -29,9 +29,10 @@ jobs:
   set-environment:
     runs-on: ubuntu-latest
     outputs:
-      environment: ${{ steps.set-env.outputs.env-sec }}
+      environment: ${{ steps.set-env.outputs.set-env }}
+      initiate-deploy: ${{ steps.set-env.outputs.deploy-ok }}
+      
     steps:
-    
       # use bash (default) script to check branch that triggered wf and set environment for secrets access
       # alternatively also use github-script action: https://github.com/marketplace/actions/github-script
       # https://ryanstutorials.net/bash-scripting-tutorial/bash-if-statements.php#nested
@@ -45,26 +46,33 @@ jobs:
           case "$GITHUB_REF_NAME" in
           develop) 
             echo "Setting environment to develop"
-            echo "::set-output name=env-sec::develop"
+            echo "::set-output name=set-env::develop"
+            echo "::set-output name=deploy-ok::true"
             ;;
           main) 
             echo "Setting environment to main"
-            echo "::set-output name=env-sec::main"
+            echo "::set-output name=set-env::main"
+            echo "::set-output name=deploy-ok::true"
             ;;
           production) 
             echo "Setting environment to production"
-            echo "::set-output name=env-sec::production"
+            echo "::set-output name=set-env::production"
+            echo "::set-output name=deploy-ok::true"
             ;;
           *) echo "Branch does not match any existing environments"
+             echo "::set-output name=deploy-ok::false"
              ;;
            esac
   
   # job 2
   deploy:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
     needs: set-environment
+    # if false, job skipped
+    # more on environments: https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment
+    if: needs.set-environment.outputs.initiate-deploy == 'true'
     environment: ${{ needs.set-environment.outputs.environment }}
+    
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
