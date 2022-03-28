@@ -63,7 +63,7 @@ jobs:
   deploy:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    if: needs.set-environment.outputs.environment == @(develop|main|production)
+    if: needs.set-environment.outputs.environment =~ ^(develop|main|production)$
     needs: set-environment
     environment: ${{ needs.set-environment.outputs.environment }}
     # Steps represent a sequence of tasks that will be executed as part of the job
