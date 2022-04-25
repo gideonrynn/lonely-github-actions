@@ -34,4 +34,4 @@ jobs:
         - name: Checkout repo
           uses: actions/checkout@v2
           with:
-            ref: (${{ github.event_name }} == 'workflow_dispatch' && ${{ github.event.inputs.branch }}) || ${{ github.head_ref }}
+            ref: ('${{ github.event_name }}' == 'workflow_dispatch' && ${{ github.event.inputs.branch }}) || ${{ github.head_ref }}
