@@ -33,7 +33,7 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - name: Set branch
-          run: echo "SET-REF=${{ ( github.event_name == 'workflow_dispatch' && github.event.inputs.branch || github.head_ref) }}" >> $GITHUB_ENV
+          run: echo "SET-REF=${{ github.event_name == 'workflow_dispatch' && github.event.inputs.branch || github.head_ref }}" >> $GITHUB_ENV
           
         - name: Checkout repo
           uses: actions/checkout@v2
