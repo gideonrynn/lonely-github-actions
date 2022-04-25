@@ -1,0 +1,37 @@
+# name that will appear in the actions tab
+name: Check PR with refs
+
+# event that controls when the workflow will run
+on: 
+  pull_request:
+    branches: [ develop ]
+  # manual execution
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch'
+        required: true
+        type: string
+          
+# prevent multiple jobs running at the same time for jobs with the specified group
+concurrency: 
+  group: affil-${{ github.ref }}
+
+
+# as a first test, log the inputs and run
+jobs:
+  # name of the first job
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "branch: $branch"
+          echo "ref: $ref"
+
+  build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout repo
+          uses: actions/checkout@v2
+          with:
+            ref: (${{ github.event_name }} == 'workflow_dispatch' && github.event.inputs.branch) || ${{ github.head_ref }}
