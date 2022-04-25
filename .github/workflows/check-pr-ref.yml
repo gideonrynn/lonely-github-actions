@@ -12,7 +12,8 @@ on:
         description: 'Branch'
         required: true
         type: string
-          
+
+  
 # prevent multiple jobs running at the same time for jobs with the specified group
 concurrency: 
   group: affil-${{ github.ref }}
@@ -31,7 +32,11 @@ jobs:
   build:
       runs-on: ubuntu-latest
       steps:
+        - name: Set branch
+          run: echo "SET-REF=${{ ( github.event_name == 'workflow_dispatch' && github.event.inputs.branch || github.head_ref) }}" >> $GITHUB_ENV
+          
         - name: Checkout repo
           uses: actions/checkout@v2
           with:
-            ref: (${{ github.event_name }} == 'workflow_dispatch' && ${{ github.event.inputs.branch }}) || ${{ github.head_ref }}
+            ref: ${{ env.SET-REF }}
+
