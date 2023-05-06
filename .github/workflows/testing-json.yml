@@ -4,9 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       int:
-        description: 'Test scenario tags'
-        required: false
-        type: boolean
+        description: 'Integrations'
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - hr
       environment:
         description: 'Environment to run tests against'
         default: dev
