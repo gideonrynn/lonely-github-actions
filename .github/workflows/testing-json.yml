@@ -1,0 +1,23 @@
+on:
+  workflow_dispatch:
+    inputs:
+      int:
+        description: 'Test scenario tags'
+        required: false
+        type: boolean
+      environment:
+        description: 'Environment to run tests against'
+        default: dev
+        type: string
+        required: true
+
+jobs:
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Int: $INT"
+          echo "Environment: $ENVIRONMENT"
+        env:
+          INT: ${{ inputs.int }}
+          ENVIRONMENT: ${{ inputs.environment }}
