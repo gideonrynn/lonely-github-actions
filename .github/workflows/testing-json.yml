@@ -16,6 +16,9 @@ on:
         default: dev
         type: string
         required: true
+      object:
+        description: 'manual object entry'
+        type: string
 
 jobs:
   log-the-inputs:
@@ -27,6 +30,8 @@ jobs:
         env:
           INT: ${{ inputs.int }}
           ENVIRONMENT: ${{ inputs.environment }}
+          JSON_RESPONSE: ${{ inputs.object }}
+                
       - run: |
           echo '{"fruit":{"name":"apple","color":"green","price":1.20}}' | jq '.'
   
