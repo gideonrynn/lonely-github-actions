@@ -28,7 +28,6 @@ jobs:
       - run: |
           echo "Int: $INT"
           echo "Environment: $ENVIRONMENT"
-          echo "
         env:
           INT: ${{ inputs.int }}
           ENVIRONMENT: ${{ inputs.environment }}
