@@ -30,8 +30,8 @@ jobs:
         env:
           INT: ${{ inputs.int }}
           ENVIRONMENT: ${{ inputs.environment }}
-          JSON_RESPONSE: ${{ inputs.object }}
+          JSON_RESPONSE: ${{ inputs.object.Schedules }}
                 
       - run: |
-          echo '${{ inputs.object.Schedules }}' | jq '.'
+          echo '${{ env.JSON_RESPONSE }}' | jq '.'
   
