@@ -27,3 +27,6 @@ jobs:
         env:
           INT: ${{ inputs.int }}
           ENVIRONMENT: ${{ inputs.environment }}
+      - run: |
+          echo '{"fruit":{"name":"apple","color":"green","price":1.20}}' | jq '.'
+  
