@@ -23,7 +23,7 @@ jobs:
   log-the-inputs:
     runs-on: ubuntu-latest
     env:
-       JSON_RESPONSE: ${{ inputs.object.Schedules }}
+       JSON_RESPONSE: ${{ inputs.object }}
     steps:
       - run: |
           echo "Int: $INT"
