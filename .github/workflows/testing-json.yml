@@ -33,5 +33,5 @@ jobs:
           JSON_RESPONSE: ${{ inputs.object }}
                 
       - run: |
-          echo '{"fruit":{"name":"apple","color":"green","price":1.20}}' | jq '.'
+          echo '$JSON_RESPONSE' | jq '.'
   
