@@ -19,19 +19,19 @@ on:
       object:
         description: 'manual object entry'
         type: string
-
 jobs:
   log-the-inputs:
     runs-on: ubuntu-latest
+    env:
+       JSON_RESPONSE: ${{ inputs.object.Schedules }}
     steps:
       - run: |
           echo "Int: $INT"
           echo "Environment: $ENVIRONMENT"
+          echo "
         env:
           INT: ${{ inputs.int }}
           ENVIRONMENT: ${{ inputs.environment }}
-          JSON_RESPONSE: ${{ inputs.object.Schedules }}
-                
       - run: |
           echo '${{ env.JSON_RESPONSE }}' | jq '.'
   
