@@ -32,7 +32,7 @@ jobs:
           INT: ${{ inputs.int }}
           ENVIRONMENT: ${{ inputs.environment }}
       - run: |
-          echo 'TEST=${{ env.JSON_RESPONSE }}' | jq '.' >> $GITHUB.ENV
+          echo 'TEST=${{ env.JSON_RESPONSE }}' | jq '.' >> $GITHUB_ENV
       - name: Check Value
         run: |
           echo '${{ env.TEST }}'
