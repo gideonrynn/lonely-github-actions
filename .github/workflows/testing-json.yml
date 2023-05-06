@@ -1,3 +1,5 @@
+name: Testing Bash
+
 on:
   workflow_dispatch:
     inputs:
