@@ -34,6 +34,6 @@ jobs:
       - name: Pretty Print with JQ
         run: |
           echo '${{ env.JSON_RESPONSE }}' | jq '.'
-          echo '${{ env.JSON_RESPONSE }}' | jq '[.Schedules]'
+          echo '${{ env.JSON_RESPONSE }}' | jq '.Schedules'
           
   
