@@ -31,7 +31,9 @@ jobs:
         env:
           INT: ${{ inputs.int }}
           ENVIRONMENT: ${{ inputs.environment }}
-      - run: |
+      - name: Pretty Print with JQ
+        run: |
           echo '${{ env.JSON_RESPONSE }}' | jq '.'
+          echo jq '.Schedules' ${{ env.JSON_RESPONSE }}
           
   
