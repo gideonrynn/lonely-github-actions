@@ -32,9 +32,6 @@ jobs:
           INT: ${{ inputs.int }}
           ENVIRONMENT: ${{ inputs.environment }}
       - run: |
-          echo "TEST=${{ env.JSON_RESPONSE }}" | jq '.'
-      - name: Check Value
-        run: |
-          echo "${{ env.TEST }}"
+          echo '${{ env.JSON_RESPONSE }}' | jq '.'
           
   
