@@ -32,8 +32,9 @@ jobs:
           INT: ${{ inputs.int }}
           ENVIRONMENT: ${{ inputs.environment }}
       - name: Pretty Print with JQ
+        # may want to have jq create the array of commands to run, then use a bash for loop to 
         run: |
           echo '${{ env.JSON_RESPONSE }}' | jq '.'
           echo '${{ env.JSON_RESPONSE }}' | jq '.Schedules[].Name'
-          echo '${{ env.JSON_RESPONSE }}' | jq -r '.Schedules[] | [("aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name)]'
+          echo '${{ env.JSON_RESPONSE }}' | jq -r '.Schedules[] | .[] ("aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name)'
   
