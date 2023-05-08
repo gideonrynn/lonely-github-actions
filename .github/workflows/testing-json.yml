@@ -36,5 +36,5 @@ jobs:
         run: |
           echo '${{ env.JSON_RESPONSE }}' | jq '.'
           echo '${{ env.JSON_RESPONSE }}' | jq '.Schedules[].Name'
-          echo '${{ env.JSON_RESPONSE }}' | jq -r '.Schedules[] | ["aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name]'
+          echo '${{ env.JSON_RESPONSE }}' | jq -r '[.Schedules[] | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name]'
   
