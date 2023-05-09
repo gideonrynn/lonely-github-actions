@@ -37,6 +37,8 @@ jobs:
           echo '${{ env.JSON_RESPONSE }}' | jq '.'
           echo '${{ env.JSON_RESPONSE }}' | jq '.Schedules[].Name'
           echo '${{ env.JSON_RESPONSE }}' | jq -r '.Schedules[] | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name'
+      - name: Print new command on single line with loop
+        run: |
           IFS=""
           for row in $(echo '${{ env.JSON_RESPONSE }}' | jq -r '.Schedules[] | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name'); do
             echo "${row}"
