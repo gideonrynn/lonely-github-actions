@@ -40,7 +40,7 @@ jobs:
       - name: Print new command on single line with loop
         run: |
           IFS=""
-          for row in $(${{ env.JSON_RESPONSE }} jq -r '.Schedules[] | ("aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name)'); do
+          for row in $(${{ env.JSON_RESPONSE }} jq -r '.Schedules[] | ("aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name)'; do
             echo value="$(${row})";
           done
       - name: Read the commands that JQ created
