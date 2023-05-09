@@ -37,11 +37,9 @@ jobs:
           echo '${{ env.JSON_RESPONSE }}' | jq '.'
           echo '${{ env.JSON_RESPONSE }}' | jq '.Schedules[].Name'
           echo '${{ env.JSON_RESPONSE }}' | jq -r '[.Schedules[] | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name]'
-          THING=$('${{ env.JSON_RESPONSE }}' | jq -r '[.Schedules[] | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name]')
-          echo "JQ_COMMANDS<<EOF" >> $GITHUB_ENV
-          # here we can place the command that will generate multi-line text
-          echo $THING >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          for row in $(echo "${{ env.JSON_RESPONSE }}" | jq -r '.Schedules[] | @base64'); do
+            name=$(echo ${row} | base64 --decode | jq -r '.Name ')
+          done
       - name: Read the commands that JQ created
         run: |
           echo 'Commands: ${{ env.JQ_COMMANDS }}'
