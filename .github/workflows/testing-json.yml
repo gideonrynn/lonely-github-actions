@@ -62,5 +62,5 @@ jobs:
           if: always()
           with:
             webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
-            dry_run: True
+            dry_run: false
   
