@@ -44,9 +44,10 @@ jobs:
             echo value="$(${row})";
           done
       - name: Try to do a thing now
+        # in repo with access to aws secrets I can run "do $awscommnd" without quotes but here I have to echo
         run: |
           echo '${{ env.JSON_RESPONSE }}' | jq -r '.Schedules[] | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name' | while read awscommand;
-          do $awscommand;
+          do echo value="$awscommand";
           done
       - name: Read the commands that JQ created
         run: |
