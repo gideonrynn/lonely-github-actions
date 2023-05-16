@@ -45,7 +45,6 @@ jobs:
           done
       - name: Try to do a thing now
         run: |
-          SCHEDULES=${{ env.JSON_RESPONSE }}
           echo '${{ env.JSON_RESPONSE }}' | jq -r '.Schedules[] | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name' | while read name;
           do echo "$name";
           done
