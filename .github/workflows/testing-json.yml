@@ -51,4 +51,16 @@ jobs:
       - name: Read the commands that JQ created
         run: |
           echo 'Commands: ${{ env.JQ_COMMANDS }}'
+          
+  success:
+      name: One with everything
+      runs-on: ubuntu-18.04
+      steps:
+        - uses: actions/checkout@master
+        - name: Microsoft Teams Notification
+          uses: skitionek/notify-microsoft-teams@master
+          if: always()
+          with:
+            webhook_url: ${{ secrets.MSTEAMS_WEBHOOK }}
+            dry_run: True
   
