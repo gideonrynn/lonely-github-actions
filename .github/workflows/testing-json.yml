@@ -59,7 +59,7 @@ jobs:
           echo '${{ env.JSON_RESPONSE }}' | jq -r '.[] | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name' | while read awscommand;
           do
             echo "Executing $awscommand"
-            echo '${{ env.JSON_RESPONSE2}}' | jq -r '.ARN'
+            echo '${{ env.JSON_RESPONSE2}}' | jq -r '.Arn'
           done
       
       - name: Read the commands that JQ created
