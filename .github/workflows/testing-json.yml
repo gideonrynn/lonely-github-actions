@@ -40,7 +40,7 @@ jobs:
       - name: Print new command on single line with loop
         run: |
           IFS=""
-          for row in $(echo '${{ env.JSON_RESPONSE }}' | jq -r '.'); do
+          for row in $(echo '${{ env.JSON_RESPONSE }}' | jq -r '.[]'); do
             echo value="$(${row})";
           done
       - name: Create get schedule command and execute
