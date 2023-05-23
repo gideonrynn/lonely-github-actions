@@ -27,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
        JSON_RESPONSE: ${{ inputs.object }}
+       JSON_RESPONSE2: ${{ inputs.result }}
     steps:
       - run: |
           echo "Int: $INT"
@@ -58,7 +59,7 @@ jobs:
           echo '${{ env.JSON_RESPONSE }}' | jq -r '.[] | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name' | while read awscommand;
           do
             echo "Executing $awscommand"
-            result="${{ inputs.result }}"
+            echo result="${{ env.JSON_RESPONSE2 }}"
           done
       
       - name: Read the commands that JQ created
