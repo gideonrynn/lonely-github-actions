@@ -57,7 +57,6 @@ jobs:
           JSON='[]'
           echo '${{ env.JSON_RESPONSE }}' | jq -r '.Schedules[] | select(.State != "ENABLED")' | while read awscommand;
           result=$(${{ inputs.result }})
-          thing=$(jq --null-input --argjson jqresultalias "$result" | --argjson jqjsonalias "$JSON" | '$jqjsonalias += $jqresultalias')
           done
       
       - name: Read the commands that JQ created
