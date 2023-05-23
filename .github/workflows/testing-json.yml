@@ -60,7 +60,7 @@ jobs:
           do
             echo "Executing $awscommand"
             echo '${{ env.JSON_RESPONSE2}}' | jq -r '.'
-            echo "result=$(${{env.JSON_RESPONSE2}})"
+            echo "result=${{env.JSON_RESPONSE2}}"
             thing=$(jq --null-input --arg jqresultalias '${{ env.JSON_RESPONSE }}' | --arg jqjsonalias '$JSON' | '$jqjsonalias += $jqresultalias')
             echo '$JSON';
           done
