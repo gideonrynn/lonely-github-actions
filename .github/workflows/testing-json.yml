@@ -59,7 +59,7 @@ jobs:
           result=${{ inputs.result }}
           jq --null-input --argjson jqresultalias "$result" | --argjson jqjsonalias "$JSON" | '$jqjsonalias += $jqresultalias'
           echo $result
-          echo $JSON
+          echo $JSON;
           done
       
       - name: Read the commands that JQ created
