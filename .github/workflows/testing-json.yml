@@ -60,6 +60,7 @@ jobs:
           do
             echo "Executing $awscommand"
             echo '${{ env.JSON_RESPONSE2}}' | jq -r '.'
+            echo jq --null-input --argjson jqresultalias "$result" | --argjson jqjsonalias "$JSON" | '$jqjsonalias += $jqresultalias');
           done
       
       - name: Read the commands that JQ created
