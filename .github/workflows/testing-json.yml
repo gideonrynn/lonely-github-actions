@@ -46,7 +46,7 @@ jobs:
       - name: Create get schedule command and execute
         # in repo with access to aws secrets I can run "do $awscommnd" without quotes but here I have to echo
         run: |
-          echo '${{ env.JSON_RESPONSE }}' | jq -r '.Schedules[] | select(.State != "ENABLED") | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name' | while read awscommand;
+          echo '${{ env.JSON_RESPONSE }}' | jq -r '.Schedules[] | select(.State != "ENABLED") | while read awscommand;
           do echo value="$awscommand";
           done
       - name: Create JSON and add to it
