@@ -59,7 +59,6 @@ jobs:
           do
             echo "Executing $awscommand"
             result=$(${{ inputs.result }})
-            thing=$(jq --null-input --argjson jqresultalias "$result" | --argjson jqjsonalias "$JSON" | '$jqjsonalias += $jqresultalias');
           done
       
       - name: Read the commands that JQ created
