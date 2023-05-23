@@ -57,9 +57,6 @@ jobs:
           JSON='[]'
           echo '${{ env.JSON_RESPONSE }}' | jq -r '.[] | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name' | while read awscommand;
           do
-            echo '$awscommand'
-            result=$(${{ inputs.result }})
-            
           done
       
       - name: Read the commands that JQ created
