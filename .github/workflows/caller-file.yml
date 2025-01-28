@@ -1,5 +1,7 @@
 name: Deploy Caller
 on:
+  schedule: # github environment will need permission to deploy from the default branch of the repo if using a schedule trigger and gh environment protections
+     - cron: "50 01 * * 1-5"
   workflow_dispatch:
     inputs:
       terraform-version:
@@ -12,8 +14,7 @@ on:
         default: false
         required: false
         type: boolean
-  schedule: # github environment will need permission to deploy from the default branch of the repo if using a schedule trigger and gh environment protections
-     - cron: "45 01 * * 1-5"
+  
 
 # this only allows one job to run for each env at a time
 concurrency:
