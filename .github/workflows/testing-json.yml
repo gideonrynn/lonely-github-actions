@@ -1,0 +1,70 @@
+name: Testing Bash
+
+on:
+  workflow_dispatch:
+    inputs:
+      int:
+        description: 'Integrations'
+        required: true
+        default: all
+        type: choice
+        options:
+          - all
+          - hr
+      environment:
+        description: 'Environment to run tests against'
+        default: dev
+        type: string
+        required: true
+      object:
+        description: 'manual object entry'
+        type: string
+      result:
+        description: 'result manual object entry'
+        type: string
+jobs:
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    env:
+       JSON_RESPONSE: ${{ inputs.object }}
+       JSON_RESPONSE2: ${{ inputs.result }}
+    steps:
+      - run: |
+          echo "Int: $INT"
+          echo "Environment: $ENVIRONMENT"
+        env:
+          INT: ${{ inputs.int }}
+          ENVIRONMENT: ${{ inputs.environment }}
+      - name: Pretty Print with JQ
+        # may want to have jq create the array of commands to run, then use a bash for loop to 
+        run: |
+          echo '${{ env.JSON_RESPONSE }}' | jq '.'
+          echo '${{ env.JSON_RESPONSE }}' | jq '.[].Name'
+          echo '${{ env.JSON_RESPONSE }}' | jq -r ['.[] | select(.State=="ENABLED") | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name']
+      - name: Print new command on single line with loop
+        run: |
+          IFS=""
+          for row in $(echo '${{ env.JSON_RESPONSE }}' | jq -r '.[]'); do
+            echo value="$(${row})";
+          done
+      - name: Create JSON and add to it
+        run: |
+          JSON='[{"name": "Jon", "class": "senior"}]'
+          jq --null-input --argjson  a "$JSON" '$a  + [{"name" : "santa", "class" : "christmas" }]'
+          echo "$a"
+      - name: Create get schedule command and execute
+        # in repo with access to aws secrets I can run "do $awscommnd" without quotes but here I have to echo
+        run: |
+          JSON='[{"result": "", "command": ""}]'
+          echo '${{ env.JSON_RESPONSE }}' | jq -r '.[] | "aws scheduler get-schedule --group-name " + .GroupName + " --name " + .Name' | while read awscommand;
+          do
+            echo "Executing $awscommand"
+            echo '${{ env.JSON_RESPONSE2}}' | jq -r '.'
+            echo 'This value is $JSON'
+            thing=$('$JSON' | jq | --arg jqresultalias "${{ env.JSON_RESPONSE2}}" | '.result |= "$jqresultalias"')
+            echo 'Now we echo the final with $JSON';
+          done
+      
+      - name: Read the commands that JQ created
+        run: |
+          echo 'Commands: ${{ env.JQ_COMMANDS }}'

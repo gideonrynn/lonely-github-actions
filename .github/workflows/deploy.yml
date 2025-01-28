@@ -1,0 +1,66 @@
+name: Manual Actions Workflow
+
+# Controls when the workflow will run
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - update
+        - note
+      interface:
+        type: string
+        description: Interface
+      comments:
+        type: string
+        description: Comments For This Run
+      are-we-having-fun:
+        type: boolean
+        description: Are We Having Fun
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  log-the-inputs:
+      runs-on: ubuntu-latest
+      steps:
+        - run: |
+            echo "Log level: $LEVEL"
+            echo "Interface: $INTERFACE"
+            echo "Environment: $ENVIRONMENT"
+            echo "Are we having fun?: $FUN"
+            echo "Comments"
+            echo "Github event object: $GITHUBEV"
+            
+          env:
+            LEVEL: ${{ github.event.inputs.logLevel }}
+            INTERFACE: ${{ github.event.inputs.tags }}
+            ENVIRONMENT: ${{ github.event.inputs.environment }}
+            COMMENTS: ${{ github.event.inputs.comments }}
+            FUN: ${{ github.event.inputs.are-we-having-fun }}
+            GITHUBEV: ${{ github.ref }}
+  
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    name: Check out repository and echo inputs
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      # Runs a single command using the runners shell
+      - name: Say something
+        run: echo "Sarah, you have manually triggered a workflow"
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo "Log level: ${{ github.event.inputs.logLevel }}"
+          echo "Tags: ${{ github.event.inputs.tags }}"
