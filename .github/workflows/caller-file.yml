@@ -9,7 +9,7 @@ on:
         type: string
       terraform-run-apply:
         description: "Run terraform apply?"
-        default: true
+        default: false
         required: false
         type: boolean
 
