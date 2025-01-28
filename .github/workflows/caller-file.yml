@@ -27,7 +27,7 @@ jobs:
           echo "Branch: $BRANCH_REF"
         env:
           TERRAFORM_VERSION: ${{ github.event.inputs.terraform-version }}
-          APPLY: ${{ github.event.inputs.run-apply }}
+          APPLY: ${{ github.event.inputs.terraform-run-apply }}
           BRANCH_REF: ${{ github.ref }}
   call-deploy-workflow:
     uses: gideonrynn/lonely-github-actions/.github/workflows/reusable-deploy.yml@develop
