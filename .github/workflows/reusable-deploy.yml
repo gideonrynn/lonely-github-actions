@@ -29,9 +29,9 @@ jobs:
           echo "AWS environment: $AWS_ENVIRONMENT"
           echo "Terraform build directory: $TERRAFORM_BUILD_DIRECTORY"
         env:
-          TERRAFORM_VERSION: ${{ github.event.inputs.terraform-version }}
-          APPLY: ${{ github.event.inputs.terraform-run-apply }}
+          TERRAFORM_VERSION: ${{ inputs.terraform-version }}
+          APPLY: ${{ inputs.terraform-run-apply }}
           BRANCH_REF: ${{ github.ref }}
-          BRANCH: ${{ github.event.inputs.branch }}
-          AWS_ENVIRONMENT: ${{ github.event.inputs.aws-environment }}
-          TERRAFORM_BUILD_DIRECTORY: ${{ github.event.inputs.terraform-build-directory}}
+          BRANCH: ${{ inputs.branch }}
+          AWS_ENVIRONMENT: ${{ inputs.aws-environment }}
+          TERRAFORM_BUILD_DIRECTORY: ${{ inputs.terraform-build-directory }}
