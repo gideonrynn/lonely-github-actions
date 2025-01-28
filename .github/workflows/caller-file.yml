@@ -1,0 +1,40 @@
+name: Deploy Caller
+on:
+  workflow_dispatch:
+    inputs:
+      terraform-version:
+        description: "Terraform version to use"
+        default: '1.5'
+        required: false
+        type: string
+      run-apply:
+        description: "Run terraform apply?"
+        default: true
+        required: false
+        type: boolean
+
+# this only allows one job to run for each env at a time
+concurrency:
+  group: environment-${{ github.ref }}
+
+jobs:
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Terraform version to use: $TERRAFORM_VERSION"
+          echo "Apply choice: $APPLY"
+          echo "Branch: $BRANCH_REF"
+        env:
+          TERRAFORM_VERSION: ${{ github.event.inputs.terraform-version }}
+          APPLY: ${{ github.event.inputs.run-apply }}
+          BRANCH_REF: ${{ github.ref }}
+  call-deploy-workflow:
+    uses: gideonrynn/lonely-github-actions/.github/workflows/reusable-deploy.yml@develop
+    secrets: inherit
+    with:
+      branch: develop
+      environment: sandbox
+      terraform-build-directory: "sandbox"
+      terraform-version: ${{ github.event.inputs.terraform-version }}
+      terraform-run-apply: ${{ github.event.inputs.run-apply || true }}
