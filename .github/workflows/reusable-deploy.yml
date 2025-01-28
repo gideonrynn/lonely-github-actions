@@ -1,0 +1,37 @@
+name: Reusable Deploy Workflow
+on:
+  workflow_call:
+    inputs:
+      branch:
+        required: true
+        type: string
+      aws-environment:
+        required: true
+        type: string
+      terraform-build-directory:
+        required: true
+        type: string
+      terraform-version:
+        required: true
+        type: string
+      terraform-run-apply:
+        required: true
+        type: boolean
+
+jobs:
+  log-the-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "Terraform version to use: $TERRAFORM_VERSION"
+          echo "Apply choice: $APPLY"
+          echo "Branch: $BRANCH_REF"
+          echo "AWS environment: $AWS_ENVIRONMENT"
+          echo "Terraform build directory: $TERRAFORM_BUILD_DIRECTORY"
+        env:
+          TERRAFORM_VERSION: ${{ github.event.inputs.terraform-version }}
+          APPLY: ${{ github.event.inputs.terraform-run-apply }}
+          BRANCH_REF: ${{ github.ref }}
+          BRANCH: ${{ github.event.inputs.branch }}
+          AWS_ENVIRONMENT: ${{ github.event.inputs.aws-environment }}
+          TERRAFORM_BUILD_DIRECTORY: ${{ github.event.inputs.terraform-build-directory}}
