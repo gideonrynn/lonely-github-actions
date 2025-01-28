@@ -7,7 +7,7 @@ on:
         default: '1.5'
         required: false
         type: string
-      run-apply:
+      terraform-run-apply:
         description: "Run terraform apply?"
         default: true
         required: false
@@ -34,7 +34,7 @@ jobs:
     secrets: inherit
     with:
       branch: develop
-      environment: sandbox
+      aws-environment: sandbox
       terraform-build-directory: "sandbox"
       terraform-version: ${{ github.event.inputs.terraform-version }}
-      terraform-run-apply: ${{ github.event.inputs.run-apply || true }}
+      terraform-run-apply: ${{ github.event.inputs.terraform-run-apply || true }}
